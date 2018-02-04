@@ -1,30 +1,54 @@
 # JIRA Chrome extension
-A chrome extension that queries a public JIRA API (https://jira.secondlife.com).  This is a fully functional chrome extension with a bug, some display issues, and generally some bad practices.  
-
-## Expectations
-
-**Your task is to make it production ready, make it easy for someone else to consume, and generally improve upon the code how you see fit.**
-
-- Spend at least an hour, and not more than 8
-- There is no "completion" score
+A chrome extension that queries a public JIRA API (https://jira.secondlife.com). 
 
 ## Files:
-* main.js - the :meat_on_bone: of the code that performs querys and displays results
-* main.html - The UI for the request results
-* manifest.json - contains metadata for the project and defines access permissions
-* options.js - contains logic for saving/retrieving user values
-* options.html - display for the user values
-* json_results/results.json - a sample of the json values returned from a JIRA ticket(s) query
+* **scripts/main.js** - Contians the main logic for the extension
+* **scripts/options.js** - Contains the logic for saving and defaulting prefs
+* **pages/main.html** - The UI for the main page.
+* **pages/options.html** - display for the user values
+* **js/alerts.js** - Common alert functionality
+* **js/fields.js** - Common field functionality
+* **js/tabs.js** - Common tabs functionality
+* **js/http.js** - Common http/get functionality
+* **js/functions.js** - Common used functions
+* **manifest.json** - contains metadata for the project and defines access permissions
 
-## Instructions
-1. Do not FORK! Do not create a PR! Clone the repository, and create a new empty repo on your account.
-2. Refactor the code in main.js however you think it should be done. **This should be anything and everything you can think of, from refactoring to formatting to addressing edge cases.**  
-   1. There's a bug that keeps the code from working, you'll need to fix that before you can get results. (once the bug is fixed, the *JIRA Activity Query* should default to a specific user and return results) 
-   2. There's code missing to display the *Ticket Status Query* results, please read the response object and return the results so they can be displayed however you'd like.
-   3. Your git history will help us understand how you approached the problem, but your git process doesn't matter.
-3. When finished. Push your submission to your empty repo, and send us a link.
+## Todo:
+* Add field to set maxresults to ticket search
+* Add field to set maxresults to activity feed
+* See if there is a json based api for activity feed and put a bullet in XML (yuck)
+* Enforce the max on the date field. Error handling captures it though ;)
+* Oh god, use constants for urls lol
 
-
-## Tips
-* [Installing a local chrome extension](https://developer.chrome.com/extensions/getstarted#unpacked)
-* The first field in the extension should default to the word "Sunshine", if it does not, it means there is a bug that needs to be fixed first.
+## Changes:
+* Fixed - Removed async call in a non-async function
+* Fixed - Removed unnecessary icon.png at root
+* Fixed - Removed the project exist check, the main call does this already
+* Fixed - Getting of settings from storage
+* Fixed - Added error check on storage get
+* Fixed - Got rid of a heck of a lot of html that was redundant or messy
+* Fixed - Renamed functions as they were not clear
+  * buildJQL
+  * getQueryResults
+  * getJIRAFeed
+* Fixed - Binding for Tickets by Status
+  * Tried to make both bindings closer to common, but xml vs json.. also changed domify
+* Fixed - Added some "common" datarow rendering
+* Fixed - Window does not flex out on results, should state somewhat static minus scrollbar
+* General - Organized files in solution, more maintainable
+* General - Moved events and page setup stuff to top of files
+* General - Consistent naming on functions
+* General - Commented all functions, intellisense weeee
+* General - Changed a lot to string interpolation
+* General - Moved http into common function
+* General - Moved to promises, I like them better
+* Added - Check for errors all over the place.
+* Added - Tabs because its yucky having it all mixed up
+* Added - Field validation, and defaulted the days in status behind the scenes
+* Fun - Main - Generally just made the ui more friendly
+* Fun - Main - Added alerts, alerts are cool yo
+* Fun - Main - Added more statuses to query and removed the id, using the query language
+* Fun - Main - Added loading indicator, hated stuff just popping into the dom
+* Fun - Options - Generally just made the ui more friendly
+* Fun - Options - Added ability to reset to defaults
+* Fun - Options - Added alerts, alerts are cool yo
